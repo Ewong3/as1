@@ -12,14 +12,18 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.eric3.eric3_fueltrack.ListActivity"
     tools:showIn="@layout/activity_list">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="A"
+        android:textSize="24sp"
+        android:textColor="#FF000000"
+        android:id="@+id/tv_list_total"/>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/EntryList"
-        android:layout_weight="2">        </ListView>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:text="A"/>
+        android:background="#8cc2f9"
+        android:foreground="#FF000000"
+        />
 </LinearLayout>

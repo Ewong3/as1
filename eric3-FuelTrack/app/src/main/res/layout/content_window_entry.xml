@@ -37,7 +37,8 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="YYYY-MM-DD"/>
+            android:hint="YYYY-MM-DD"
+            android:id="@+id/et_window_date"/>
     </LinearLayout>
 
 
@@ -53,7 +54,8 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Station"/>
+            android:hint="Station"
+            android:id="@+id/et_window_station"/>
     </LinearLayout>
 
 
@@ -69,7 +71,8 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Odometer (km)"/>
+            android:hint="Odometer (km)"
+            android:id="@+id/et_window_odo"/>
     </LinearLayout>
 
 
@@ -85,7 +88,8 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Fuel Grade"/>
+            android:hint="Fuel Grade"
+            android:id="@+id/et_window_grade"/>
     </LinearLayout>
 
 
@@ -101,7 +105,8 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Fuel Amount (L)"/>
+            android:hint="Fuel Amount (L)"
+            android:id="@+id/et_window_amount"/>
     </LinearLayout>
 
 
@@ -117,7 +122,8 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Unit Cost (cents/L)"/>
+            android:hint="Unit Cost (cents/L)"
+            android:id="@+id/et_window_Ucost"/>
     </LinearLayout>
 
     <LinearLayout
