@@ -85,9 +85,21 @@ public class windowEntryActivity extends AppCompatActivity {
         String Sfamount = et_amount.getText().toString();
         String Sfunitcost = et_Ucost.getText().toString();
 
-        double odo = Double.parseDouble(Sodo);
-        double famount = Double.parseDouble(Sfamount);
-        double funitcost = Double.parseDouble(Sfunitcost);
+        double odo = 0.0;
+        if (!Sodo.isEmpty()) {
+            odo = Double.parseDouble(Sodo);
+        }
+
+        double famount = 0.0;
+        if (!Sfamount.isEmpty()) {
+            famount = Double.parseDouble(Sfamount);
+        }
+
+        double funitcost = 0.0;
+        if (!Sfunitcost.isEmpty()) {
+          funitcost  = Double.parseDouble(Sfunitcost);
+        }
+
         return new LogEntry(date, station, odo, fgrade, famount, funitcost);
     }
 
@@ -100,7 +112,6 @@ public class windowEntryActivity extends AppCompatActivity {
         getWindow().setLayout(width, height);
     }
     /*
-    http://www.technotalkative.com/android-send-object-from-one-activity-to-another-activity/
     http://stackoverflow.com/questions/10407159/how-to-manage-startactivityforresult-on-android
     http://stackoverflow.com/questions/32050647/how-to-create-simple-android-studio-pop-up-window-with-edittext-field-for-data-i
     http://www.tutorialspoint.com/java/java_files_io.htm

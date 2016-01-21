@@ -73,6 +73,13 @@ public class ListActivity extends AppCompatActivity {
         else if (id == R.id.action_add){
             click("Add", -1);
         }
+        // This action bar item will clear all entries
+        else if (id == R.id.action_delete){
+            entries = new ArrayList<LogEntry>();
+            displayTotal();
+            displayList();
+            EntrytoFile();
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -122,18 +129,6 @@ public class ListActivity extends AppCompatActivity {
         }
         return false;
     }
-    /*
-    public LogEntry createLog(Intent intent) {
-        String date = intent.getStringExtra("date");
-        String station = intent.getStringExtra("station");
-        double odo = intent.getDoubleExtra("odo", 0.0);
-        String fgrade = intent.getStringExtra("grade");
-        double famount = intent.getDoubleExtra("amt", 0.0);
-        double funitcost = intent.getDoubleExtra("Ucost", 0.0);
-        LogEntry newEntry = new LogEntry(date, station, odo, fgrade, famount, funitcost);
-        return newEntry;
-    }
-    */
 
     // This function refreshes the ListView
     public void displayList(){
@@ -152,6 +147,7 @@ public class ListActivity extends AppCompatActivity {
         view1.setAdapter(adapt);
     }
 
+    //TODO Use GSON instead to display
     // This function updates the accumulated cost of all fuel entries
     public void displayTotal(){
         int lstSize = entries.size();
@@ -163,6 +159,8 @@ public class ListActivity extends AppCompatActivity {
         DecimalFormat df = new DecimalFormat("#0.00");
         tv_total.setText("Total Cost of Fuel: " + df.format(total));
     }
+
+    //TODO Use GSON instead to load Entries
     // This function reads a file and converts it to LogEntry objects placed in ArrayList<LogEntry>
     public void FiletoEntry() {
         try {
@@ -180,6 +178,7 @@ public class ListActivity extends AppCompatActivity {
         } catch (Exception e) { }
     }
 
+    //TODO Use GSON instead to save Entries
     // This function saves the ArrayList<LogEntry> into a file
     public void EntrytoFile(){
         try{

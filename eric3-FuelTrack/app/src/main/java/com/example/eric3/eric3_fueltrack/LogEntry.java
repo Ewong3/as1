@@ -62,6 +62,7 @@ public class LogEntry implements Serializable{
     public Double getFcost() {
         return Fcost;
     }
+
     // This function is used to concatenate the data in the object into a String
     public String EntrytoString(){
         return date + ", " + station + ", " + getSOdom() + " KM, " + Fgrade + ", " + getSFamount() + " L, " + getSFunit() + "¢/L, $" + getSFcost();
