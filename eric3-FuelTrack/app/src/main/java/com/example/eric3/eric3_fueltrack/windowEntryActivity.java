@@ -80,10 +80,14 @@ public class windowEntryActivity extends AppCompatActivity {
 
         String date = et_date.getText().toString();
         String station = et_station.getText().toString();
-        double odo = Double.parseDouble(et_odo.getText().toString());
         String fgrade = et_grade.getText().toString();
-        double famount = Double.parseDouble(et_amount.getText().toString());
-        double funitcost = Double.parseDouble(et_Ucost.getText().toString());
+        String Sodo = et_odo.getText().toString();
+        String Sfamount = et_amount.getText().toString();
+        String Sfunitcost = et_Ucost.getText().toString();
+
+        double odo = Double.parseDouble(Sodo);
+        double famount = Double.parseDouble(Sfamount);
+        double funitcost = Double.parseDouble(Sfunitcost);
         return new LogEntry(date, station, odo, fgrade, famount, funitcost);
     }
 
