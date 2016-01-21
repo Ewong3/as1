@@ -1,6 +1,7 @@
 package com.example.eric3.eric3_fueltrack;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,17 +15,27 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.io.File;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+    //TODO in windowEntryActivity.java, send Intent using GSON instead of serializable
 public class ListActivity extends AppCompatActivity {
     protected ArrayList<LogEntry> entries = new ArrayList<LogEntry>();
+    private ArrayAdapter<LogEntry> entryAdapter;
     private String filename = "LogFile.bin";
+    private ListView entryList;
+    private TextView entryTotal;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,15 +43,11 @@ public class ListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Load all data and displays
-        //TODO Load ArrayList entries from file
-        FiletoEntry();
-        displayTotal();
-        displayList();
+        entryList = (ListView) findViewById(R.id.lv_list_entryList);
+        entryTotal = (TextView) findViewById(R.id.tv_list_total);
 
         // This sets a Long Click function to the ListView. It is used to edit the information in the entry
-        final ListView lst = (ListView)findViewById(R.id.EntryList);
-        lst.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        entryList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 if (entries.size() != 0) {
@@ -49,6 +56,16 @@ public class ListActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    // Load all data and displays
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FiletoEntry();
+        displayTotal();
+        entryAdapter = new ArrayAdapter<LogEntry>(this,R.layout.itemlist, entries);
+        entryList.setAdapter(entryAdapter);
     }
 
     @Override
@@ -75,12 +92,10 @@ public class ListActivity extends AppCompatActivity {
         }
         // This action bar item will clear all entries
         else if (id == R.id.action_delete){
-            entries = new ArrayList<LogEntry>();
-            displayTotal();
-            displayList();
+            entries.clear();
+            entryAdapter.notifyDataSetChanged();
             EntrytoFile();
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -89,12 +104,9 @@ public class ListActivity extends AppCompatActivity {
         // If requestCode == 1, then it signifies that the recently obtained LogEntry object is to be added
         if (requestCode == 1){
             if (resultCode == Activity.RESULT_OK){
-                //LogEntry recentEntry = createLog(data);
                 LogEntry recentEntry = (LogEntry) data.getSerializableExtra("entry");
                 this.entries.add(recentEntry);
-                //TODO Save data
-                displayTotal();
-                displayList();
+                entryAdapter.notifyDataSetChanged();
                 EntrytoFile();
             }
         }
@@ -107,9 +119,7 @@ public class ListActivity extends AppCompatActivity {
                 if (position >= 0) {
                     this.entries.set(position, recentEntry);
                 }
-                //TODO Save data
-                displayTotal();
-                displayList();
+                entryAdapter.notifyDataSetChanged();
                 EntrytoFile();
             }
         }
@@ -130,24 +140,6 @@ public class ListActivity extends AppCompatActivity {
         return false;
     }
 
-    // This function refreshes the ListView
-    public void displayList(){
-        ArrayList<String> lst = new ArrayList<String>();
-        int lstSize = entries.size();
-        if (lstSize != 0){
-            for (int count = 0; count < lstSize; count ++) {
-                lst.add(count + entries.get(count).EntrytoString());
-            }
-        } else {
-            lst.add("No entries :(");
-        }
-        ListAdapter adapt = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,lst);
-        final ListView view1 = (ListView)findViewById(R.id.EntryList);
-
-        view1.setAdapter(adapt);
-    }
-
-    //TODO Use GSON instead to display
     // This function updates the accumulated cost of all fuel entries
     public void displayTotal(){
         int lstSize = entries.size();
@@ -155,43 +147,33 @@ public class ListActivity extends AppCompatActivity {
         for (int count = 0; count < lstSize; count++) {
             total += entries.get(count).getFcost();
         }
-        TextView tv_total = (TextView) findViewById(R.id.tv_list_total);
         DecimalFormat df = new DecimalFormat("#0.00");
-        tv_total.setText("Total Cost of Fuel: " + df.format(total));
+        entryTotal.setText("Total Cost of Fuel: " + df.format(total));
     }
 
-    //TODO Use GSON instead to load Entries
     // This function reads a file and converts it to LogEntry objects placed in ArrayList<LogEntry>
     public void FiletoEntry() {
         try {
-            File file = new File(this.getFilesDir(),filename);
-            FileInputStream inputStream = new FileInputStream(file);
-            if (inputStream != null) {
-                ObjectInputStream objectInput = new ObjectInputStream(inputStream);
-                LogEntry log;
-                while ((log = (LogEntry) objectInput.readObject()) != null){
-                    entries.add(log);
-                }
-                objectInput.close();
-                inputStream.close();
-            }
+            FileInputStream fis = openFileInput(filename);
+            BufferedReader bin = new BufferedReader(new InputStreamReader(fis));
+
+            Gson gson = new Gson();
+            Type type = new TypeToken<ArrayList<LogEntry>>() {}.getType();
+            entries = gson.fromJson(bin, type);
+            fis.close();
         } catch (Exception e) { }
     }
 
-    //TODO Use GSON instead to save Entries
     // This function saves the ArrayList<LogEntry> into a file
     public void EntrytoFile(){
         try{
-            File file = new File(this.getFilesDir(),filename);
-            FileOutputStream outputStream = new FileOutputStream(file);
-            ObjectOutputStream objectOutput = new ObjectOutputStream(outputStream);
-            int lstSize = entries.size();
-            for (int count = 0; count < lstSize; count++) {
-                objectOutput.writeObject(entries.get(count));
-                objectOutput.flush();
-            }
-            objectOutput.close();
-            outputStream.close();
+            FileOutputStream fos = openFileOutput(filename, Context.MODE_PRIVATE);
+            BufferedWriter bout = new BufferedWriter(new OutputStreamWriter(fos));
+            Gson gson = new Gson();
+            gson.toJson(entries, bout);
+            bout.flush();
+            fos.close();
+            bout.close();
         } catch (Exception e) {       }
     }
 }

@@ -7,6 +7,7 @@ import java.text.DecimalFormat;
  * Created by Eric on 2016-01-16.
  */
 
+// TODO remove serializable
 // This is a LogEntry object. It holds all required information to track fuel entries into the application
 public class LogEntry implements Serializable{
     private String date;
@@ -63,8 +64,9 @@ public class LogEntry implements Serializable{
         return Fcost;
     }
 
-    // This function is used to concatenate the data in the object into a String
-    public String EntrytoString(){
+    // Override to concatenate all the data in the LogEntry object into a String
+    @Override
+    public String toString() {
         return date + ", " + station + ", " + getSOdom() + " KM, " + Fgrade + ", " + getSFamount() + " L, " + getSFunit() + "¢/L, $" + getSFcost();
     }
 }

@@ -22,8 +22,7 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/EntryList"
+        android:id="@+id/lv_list_entryList"
         android:background="#8cc2f9"
-        android:foreground="#FF000000"
         />
 </LinearLayout>

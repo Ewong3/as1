@@ -114,7 +114,6 @@ public class windowEntryActivity extends AppCompatActivity {
     /*
     http://stackoverflow.com/questions/10407159/how-to-manage-startactivityforresult-on-android
     http://stackoverflow.com/questions/32050647/how-to-create-simple-android-studio-pop-up-window-with-edittext-field-for-data-i
-    http://www.tutorialspoint.com/java/java_files_io.htm
     https://docs.oracle.com/javase/7/docs/api/java/text/DecimalFormat.html
     */
 }
