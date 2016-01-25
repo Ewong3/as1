@@ -104,7 +104,9 @@ public class ListActivity extends AppCompatActivity {
         // If requestCode == 1, then it signifies that the recently obtained LogEntry object is to be added
         if (requestCode == 1){
             if (resultCode == Activity.RESULT_OK){
-                LogEntry recentEntry = (LogEntry) data.getSerializableExtra("entry");
+                Gson gson = new Gson();
+
+                LogEntry recentEntry = gson.fromJson(data.getStringExtra("entry"), LogEntry.class);
                 this.entries.add(recentEntry);
                 entryAdapter.notifyDataSetChanged();
                 EntrytoFile();
@@ -114,8 +116,8 @@ public class ListActivity extends AppCompatActivity {
         if (requestCode == 0){
             if(resultCode == Activity.RESULT_OK){
                 int position = data.getIntExtra("pos", -1);
-                //LogEntry recentEntry = createLog(data);
-                LogEntry recentEntry = (LogEntry) data.getSerializableExtra("entry");
+                Gson gson = new Gson();
+                LogEntry recentEntry = gson.fromJson(data.getStringExtra("entry"), LogEntry.class);
                 if (position >= 0) {
                     this.entries.set(position, recentEntry);
                 }

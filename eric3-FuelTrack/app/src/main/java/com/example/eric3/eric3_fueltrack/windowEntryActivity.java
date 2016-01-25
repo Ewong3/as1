@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 public class windowEntryActivity extends AppCompatActivity {
     private int pos;
     @Override
@@ -47,7 +49,9 @@ public class windowEntryActivity extends AppCompatActivity {
         Intent retIntent = new Intent();
         retIntent.putExtra("pos", pos);
         LogEntry newestLog = getEntryData();
-        retIntent.putExtra("entry", newestLog);
+        Gson gson = new Gson();
+
+        retIntent.putExtra("entry", gson.toJson(newestLog));
         setResult(Activity.RESULT_OK, retIntent);
         finish();
     }
