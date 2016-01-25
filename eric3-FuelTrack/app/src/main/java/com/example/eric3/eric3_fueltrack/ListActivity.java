@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,7 +27,7 @@ import java.lang.reflect.Type;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-    //TODO in windowEntryActivity.java, send Intent using GSON instead of serializable
+
 public class ListActivity extends AppCompatActivity {
     protected ArrayList<LogEntry> entries = new ArrayList<LogEntry>();
     private ArrayAdapter<LogEntry> entryAdapter;
@@ -90,7 +89,7 @@ public class ListActivity extends AppCompatActivity {
         else if (id == R.id.action_add){
             click("Add", -1);
         }
-        // This action bar item will clear all entries
+        // This action bar item will clear all entries and update.
         else if (id == R.id.action_delete){
             entries.clear();
             entryAdapter.notifyDataSetChanged();
@@ -128,6 +127,7 @@ public class ListActivity extends AppCompatActivity {
     }
 
     // This changes the resultCode depending on if it is an Add(1) or an Edit(0)
+    //      and sends an Intent to windowEntryActivity.java.
     public boolean click(String mode, int position){
         Intent intent = new Intent(ListActivity.this, windowEntryActivity.class);
         intent.putExtra("mode", mode);

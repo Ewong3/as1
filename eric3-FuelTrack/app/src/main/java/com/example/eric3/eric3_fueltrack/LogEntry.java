@@ -64,7 +64,10 @@ public class LogEntry {
         return Fcost;
     }
 
-    // Override to concatenate all the data in the LogEntry object into a String
+    // Override to concatenate all the data in the LogEntry object into a String.
+    //      I Understand this is not a good practice and should have done this in
+    //      ListActivity.java, but I could not figure out a way to avoid using
+    //      this along with the ArrayAdapter.
     @Override
     public String toString() {
         return date + ", " + station + ", " + getSOdom() + " KM, " + Fgrade + ", " + getSFamount() + " L, " + getSFunit() + "¢/L, $" + getSFcost();

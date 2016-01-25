@@ -39,14 +39,14 @@ public class windowEntryActivity extends AppCompatActivity {
         }
     }
 
-    // Send a canceled result back to ListActivity
+    // Send a canceled result back to ListActivity.java
     public void b_onClick_windowCancel(View view) {
         Intent retIntent = new Intent();
         setResult(Activity.RESULT_CANCELED, retIntent);
         finish();
     }
 
-    // Send a successful result back to ListActivity
+    // Send a successful result back to ListActivity.java
     public void b_onClick_windowOk(View view) {
         Intent retIntent = new Intent();
         retIntent.putExtra("pos", pos);
@@ -58,7 +58,9 @@ public class windowEntryActivity extends AppCompatActivity {
         finish();
     }
 
-    // This function pulls information from the initial entry into the window
+    // This function pulls information from the selected entry into the window
+    //      I made made this so the user does not have to re-fill all EditText
+    //      views when editing.
     public void editMode(LogEntry editEntry){
         EditText et_date = (EditText) findViewById(R.id.et_window_date);
         EditText et_station = (EditText) findViewById(R.id.et_window_station);
@@ -75,7 +77,8 @@ public class windowEntryActivity extends AppCompatActivity {
         et_Ucost.setText(editEntry.getSFunit());
     }
 
-    // This function will get all on the user inputs from the EditText boxes and return a LogEntry object
+    // This function will get all on the user inputs from the EditText boxes
+    //      and return a LogEntry object.
     public LogEntry getEntryData(){
         EditText et_date = (EditText) findViewById(R.id.et_window_date);
         EditText et_station = (EditText) findViewById(R.id.et_window_station);
@@ -91,6 +94,8 @@ public class windowEntryActivity extends AppCompatActivity {
         String Sfamount = et_amount.getText().toString();
         String Sfunitcost = et_Ucost.getText().toString();
 
+        // This section of getEntryData() checks if the EditText views for double types
+        //      are empty. If they are, they will be initialized to 0.0.
         double odo = 0.0;
         if (!Sodo.isEmpty()) {
             odo = Double.parseDouble(Sodo);
@@ -109,7 +114,8 @@ public class windowEntryActivity extends AppCompatActivity {
         return new LogEntry(date, station, odo, fgrade, famount, funitcost);
     }
 
-    // The setWindow function shrinks the window size of the activity to look similar to a popup
+    // The setWindow function shrinks the window size of the activity to look
+    //      similar to a popup or a window.
     public void setWindow(){
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -117,9 +123,10 @@ public class windowEntryActivity extends AppCompatActivity {
         int height = (int) (dm.heightPixels * 0.9);
         getWindow().setLayout(width, height);
     }
-    /*
+    /*  Last acessed: 2016, Jan.17
     http://stackoverflow.com/questions/10407159/how-to-manage-startactivityforresult-on-android
     http://stackoverflow.com/questions/32050647/how-to-create-simple-android-studio-pop-up-window-with-edittext-field-for-data-i
+    Last acessed: 2016, jan 18
     https://docs.oracle.com/javase/7/docs/api/java/text/DecimalFormat.html
     */
 }
