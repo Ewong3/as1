@@ -58,7 +58,7 @@ public class ListActivity extends AppCompatActivity {
         });
     }
 
-    // Load all data and displays
+    // Load or update all data and displays
     @Override
     protected void onStart() {
         super.onStart();
@@ -136,7 +136,8 @@ public class ListActivity extends AppCompatActivity {
             startActivityForResult(intent, 1);
         }
         else {
-            intent.putExtra("entry", entries.get(position));
+            Gson gson = new Gson();
+            intent.putExtra("entry", gson.toJson(entries.get(position)));
             startActivityForResult(intent, 0);
         }
         return false;

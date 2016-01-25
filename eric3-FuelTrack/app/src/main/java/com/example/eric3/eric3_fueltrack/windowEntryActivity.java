@@ -31,8 +31,10 @@ public class windowEntryActivity extends AppCompatActivity {
         tv_title.setText(mode + "ing");
         b_ok.setText(mode);
 
+        //
         if (mode.equals("Edit")){
-            LogEntry editEntry = (LogEntry) intent.getSerializableExtra("entry");
+            Gson gson = new Gson();
+            LogEntry editEntry = gson.fromJson(intent.getStringExtra("entry"), LogEntry.class);
             editMode(editEntry);
         }
     }

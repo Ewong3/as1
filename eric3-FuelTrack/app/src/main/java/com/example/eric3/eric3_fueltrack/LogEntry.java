@@ -9,7 +9,7 @@ import java.text.DecimalFormat;
 
 // TODO remove serializable
 // This is a LogEntry object. It holds all required information to track fuel entries into the application
-public class LogEntry implements Serializable{
+public class LogEntry {
     private String date;
     private String station;
     private Double odom;
