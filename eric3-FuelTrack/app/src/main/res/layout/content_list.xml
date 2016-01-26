@@ -23,6 +23,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/lv_list_entryList"
-        android:background="#8cc2f9"
+        android:background="#bbd5f1"
         />
 </LinearLayout>
