@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 
 public class ListActivity extends AppCompatActivity {
-    protected ArrayList<LogEntry> entries = new ArrayList<LogEntry>();
+    private ArrayList<LogEntry> entries = new ArrayList<LogEntry>();
     private ArrayAdapter<LogEntry> entryAdapter;
     private String filename = "LogFile.bin";
     private ListView entryList;

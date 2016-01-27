@@ -26,7 +26,7 @@ public class LogEntry {
         this.Fgrade = fgrade;
         this.Famount = famount;
         this.Funit = funit;
-        this.Fcost = funit * famount;
+        this.Fcost = (funit * famount)/ 100;
     }
 
     public String getDate() {
