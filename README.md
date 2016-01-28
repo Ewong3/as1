@@ -1,2 +1,1 @@
-# as1
-Cmput301 Assignment 1
+https://archive.org/details/eric3_as1_demo
