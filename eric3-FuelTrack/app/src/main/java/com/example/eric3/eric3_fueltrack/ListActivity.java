@@ -61,7 +61,7 @@ public class ListActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        FiletoEntry();
+        FiletoEntry(filename);
         displayTotal();
         entryAdapter = new ArrayAdapter<LogEntry>(this,R.layout.itemlist, entries);
         entryList.setAdapter(entryAdapter);
@@ -94,7 +94,7 @@ public class ListActivity extends AppCompatActivity {
             entries.clear();
             entryAdapter.notifyDataSetChanged();
             displayTotal();
-            EntrytoFile();
+            EntrytoFile(filename);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -109,7 +109,7 @@ public class ListActivity extends AppCompatActivity {
                 LogEntry recentEntry = gson.fromJson(data.getStringExtra("entry"), LogEntry.class);
                 this.entries.add(recentEntry);
                 entryAdapter.notifyDataSetChanged();
-                EntrytoFile();
+                EntrytoFile(filename);
             }
         }
         // If requestCode == 0, then it signifies that the recent obtained LogEntry object is an edit to existing object
@@ -122,7 +122,7 @@ public class ListActivity extends AppCompatActivity {
                     this.entries.set(position, recentEntry);
                 }
                 entryAdapter.notifyDataSetChanged();
-                EntrytoFile();
+                EntrytoFile(filename);
             }
         }
     }
@@ -156,9 +156,9 @@ public class ListActivity extends AppCompatActivity {
     }
 
     // This function reads a file and converts it to LogEntry objects placed in ArrayList<LogEntry>
-    public void FiletoEntry() {
+    public void FiletoEntry(String fn) {
         try {
-            FileInputStream fis = openFileInput(filename);
+            FileInputStream fis = openFileInput(fn);
             BufferedReader bin = new BufferedReader(new InputStreamReader(fis));
 
             Gson gson = new Gson();
@@ -169,9 +169,9 @@ public class ListActivity extends AppCompatActivity {
     }
 
     // This function saves the ArrayList<LogEntry> into a file
-    public void EntrytoFile(){
+    public void EntrytoFile(String fn){
         try{
-            FileOutputStream fos = openFileOutput(filename, Context.MODE_PRIVATE);
+            FileOutputStream fos = openFileOutput(fn, Context.MODE_PRIVATE);
             BufferedWriter bout = new BufferedWriter(new OutputStreamWriter(fos));
             Gson gson = new Gson();
             gson.toJson(entries, bout);
