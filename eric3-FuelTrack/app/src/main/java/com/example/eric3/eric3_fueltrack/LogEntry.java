@@ -72,4 +72,8 @@ public class LogEntry {
     public String toString() {
         return date + ", " + station + ", " + getSOdom() + " KM, " + Fgrade + ", " + getSFamount() + " L, " + getSFunit() + "¢/L, $" + getSFcost();
     }
+    /*
+        Last accessed: 2016, jan 18
+    https://docs.oracle.com/javase/7/docs/api/java/text/DecimalFormat.html
+     */
 }

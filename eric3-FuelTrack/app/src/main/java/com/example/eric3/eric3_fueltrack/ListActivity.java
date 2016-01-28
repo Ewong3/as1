@@ -93,6 +93,7 @@ public class ListActivity extends AppCompatActivity {
         else if (id == R.id.action_delete){
             entries.clear();
             entryAdapter.notifyDataSetChanged();
+            displayTotal();
             EntrytoFile();
         }
         return super.onOptionsItemSelected(item);
@@ -151,7 +152,7 @@ public class ListActivity extends AppCompatActivity {
             total += entries.get(count).getFcost();
         }
         DecimalFormat df = new DecimalFormat("#0.00");
-        entryTotal.setText("Total Cost of Fuel: " + df.format(total));
+        entryTotal.setText("Total Cost of Fuel: $" + df.format(total));
     }
 
     // This function reads a file and converts it to LogEntry objects placed in ArrayList<LogEntry>

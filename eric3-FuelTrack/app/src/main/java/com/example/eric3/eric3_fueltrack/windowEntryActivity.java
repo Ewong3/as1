@@ -9,11 +9,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
 public class windowEntryActivity extends AppCompatActivity {
     private int pos;
+    private LogEntry recentEntry;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,12 +52,13 @@ public class windowEntryActivity extends AppCompatActivity {
     public void b_onClick_windowOk(View view) {
         Intent retIntent = new Intent();
         retIntent.putExtra("pos", pos);
-        LogEntry newestLog = getEntryData();
-        Gson gson = new Gson();
+        if (getEntryData()) {
+            Gson gson = new Gson();
 
-        retIntent.putExtra("entry", gson.toJson(newestLog));
-        setResult(Activity.RESULT_OK, retIntent);
-        finish();
+            retIntent.putExtra("entry", gson.toJson(this.recentEntry));
+            setResult(Activity.RESULT_OK, retIntent);
+            finish();
+        }
     }
 
     // This function pulls information from the selected entry into the window
@@ -78,8 +81,8 @@ public class windowEntryActivity extends AppCompatActivity {
     }
 
     // This function will get all on the user inputs from the EditText boxes
-    //      and return a LogEntry object.
-    public LogEntry getEntryData(){
+    //      and return a Boolean depending on failure or success.
+    public boolean getEntryData(){
         EditText et_date = (EditText) findViewById(R.id.et_window_date);
         EditText et_station = (EditText) findViewById(R.id.et_window_station);
         EditText et_odo = (EditText) findViewById(R.id.et_window_odo);
@@ -94,24 +97,32 @@ public class windowEntryActivity extends AppCompatActivity {
         String Sfamount = et_amount.getText().toString();
         String Sfunitcost = et_Ucost.getText().toString();
 
-        // This section of getEntryData() checks if the EditText views for double types
-        //      are empty. If they are, they will be initialized to 0.0.
-        double odo = 0.0;
-        if (!Sodo.isEmpty()) {
-            odo = Double.parseDouble(Sodo);
-        }
-
+        /* This section of getEntryData() checks if the EditText views for double types
+              are empty. If they are, they will be initialized to 0.0. If they are invalid
+              numbers, then an error will display.
+        */
+        double odo= 0.0;
         double famount = 0.0;
-        if (!Sfamount.isEmpty()) {
-            famount = Double.parseDouble(Sfamount);
-        }
-
         double funitcost = 0.0;
-        if (!Sfunitcost.isEmpty()) {
-          funitcost  = Double.parseDouble(Sfunitcost);
-        }
+        try {
+            if (!Sodo.isEmpty()) {
+                odo = Double.parseDouble(Sodo);
+            }
 
-        return new LogEntry(date, station, odo, fgrade, famount, funitcost);
+            if (!Sfamount.isEmpty()) {
+                famount = Double.parseDouble(Sfamount);
+            }
+
+            if (!Sfunitcost.isEmpty()) {
+                funitcost = Double.parseDouble(Sfunitcost);
+            }
+            this.recentEntry = new LogEntry(date, station, odo, fgrade, famount, funitcost);
+        } catch (NumberFormatException except) {
+            Toast toast = Toast.makeText(this, "Invalid numbers", Toast.LENGTH_SHORT);
+            toast.show();
+            return false;
+        }
+        return true;
     }
 
     // The setWindow function shrinks the window size of the activity to look
@@ -123,10 +134,8 @@ public class windowEntryActivity extends AppCompatActivity {
         int height = (int) (dm.heightPixels * 0.9);
         getWindow().setLayout(width, height);
     }
-    /*  Last acessed: 2016, Jan.17
+    /*  Last accessed: 2016, Jan.17
     http://stackoverflow.com/questions/10407159/how-to-manage-startactivityforresult-on-android
     http://stackoverflow.com/questions/32050647/how-to-create-simple-android-studio-pop-up-window-with-edittext-field-for-data-i
-    Last acessed: 2016, jan 18
-    https://docs.oracle.com/javase/7/docs/api/java/text/DecimalFormat.html
     */
 }
