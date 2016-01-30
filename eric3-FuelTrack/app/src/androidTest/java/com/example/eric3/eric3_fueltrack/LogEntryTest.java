@@ -19,13 +19,13 @@ public class LogEntryTest extends ActivityInstrumentationTestCase2{
         assertEquals(entry.getSFcost(),"26.28");
     }
 
-    // Tests the calculation of the total cost of fuel
+    // Tests the calculation of the total cost of fuel. Want to multiply fuel amount by fuel cost and convert it to dollars.
     public void testEntrygetFcost() {
         LogEntry entry = new LogEntry("2016-01-01", "7-11", 123456.0, "premium", 34.4, 76.4);
         assertEquals(entry.getFcost(),34.4 * 76.4 / 100);
     }
 
-    // Test the toString output format of Entry
+    // Test the toString output format of Entry.
     public void testEntrytoString() {
         LogEntry entry = new LogEntry("2016-01-01", "7-11", 123456.0, "premium", 34.4, 76.4);
         assertEquals(entry.toString(), "2016-01-01, 7-11, 123456.0 KM, premium, 34.400 L, 76.4¢/L, $26.28" );
