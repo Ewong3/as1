@@ -2,13 +2,8 @@ package com.example.eric3.eric3_fueltrack;
 
 import java.text.DecimalFormat;
 
-/**
- * Created by Eric on 2016-01-16.
- */
-
-// TODO remove serializable
 // This is a LogEntry object. It holds all required information to track fuel entries into the application
-public class LogEntry {
+public class LogEntry implements Entry {
     private String date;
     private String station;
     private Double odom;
@@ -45,6 +40,18 @@ public class LogEntry {
         return Fgrade;
     }
 
+    public Double getOdom() {
+        return odom;
+    }
+
+    public Double getFamount() {
+        return Famount;
+    }
+
+    public Double getFunit() {
+        return Funit;
+    }
+
     public String getSFamount() {
         DecimalFormat df = new DecimalFormat("#0.000");
         return df.format(Famount);
@@ -55,7 +62,7 @@ public class LogEntry {
         return df.format(Funit);
     }
 
-    public String getSFcost(){
+    public String getSFcost() {
         DecimalFormat df = new DecimalFormat("#0.00");
         return df.format(Fcost);
     }

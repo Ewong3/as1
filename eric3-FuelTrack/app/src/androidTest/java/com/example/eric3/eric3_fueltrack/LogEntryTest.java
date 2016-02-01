@@ -2,15 +2,13 @@ package com.example.eric3.eric3_fueltrack;
 
 import android.test.ActivityInstrumentationTestCase2;
 
-/**
- * Created by eric3 on 1/28/16.
- */
 public class LogEntryTest extends ActivityInstrumentationTestCase2{
 
     public LogEntryTest() {
         super(LogEntry.class);
     }
-    // Tests the formatting of decimal places
+
+    // Tests the formatting of decimal places.
     public void testEntryFormat(){
         LogEntry entry = new LogEntry("2016-01-01", "7-11", 123456.0, "premium", 34.4, 76.4);
         assertEquals(entry.getSOdom(),"123456.0");
