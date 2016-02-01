@@ -13,6 +13,9 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class windowEntryActivity extends AppCompatActivity {
     private int pos;
     private LogEntry recentEntry;
@@ -30,7 +33,9 @@ public class windowEntryActivity extends AppCompatActivity {
         // Set title of the popup window
         TextView tv_title = (TextView) findViewById(R.id.tv_window_title);
         Button b_ok = (Button) findViewById(R.id.b_window_ok);
-        tv_title.setText(mode + "ing");
+
+        String title = mode + "ing";
+        tv_title.setText(title);
         b_ok.setText(mode);
 
         //
@@ -97,6 +102,16 @@ public class windowEntryActivity extends AppCompatActivity {
         String Sfamount = et_amount.getText().toString();
         String Sfunitcost = et_Ucost.getText().toString();
 
+        /* I have assumed that if the User does not input any data for the Date, then the app
+               initialize a yyyy-mm-dd format automatically.
+               If Station or Grade is left blank by the user, it will remain blank.
+         */
+        if (date.equals("")) {
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            date = dateFormat.format(cal.getTime());
+        }
+
         /* This section of getEntryData() checks if the EditText views for double types
               are empty. If they are, they will be initialized to 0.0. If they are invalid
               numbers, then an error will display.
@@ -117,6 +132,7 @@ public class windowEntryActivity extends AppCompatActivity {
                 funitcost = Double.parseDouble(Sfunitcost);
             }
             this.recentEntry = new LogEntry(date, station, odo, fgrade, famount, funitcost);
+
         } catch (NumberFormatException except) {
             Toast toast = Toast.makeText(this, "Invalid numbers", Toast.LENGTH_SHORT);
             toast.show();

@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 
 public class ListActivity extends AppCompatActivity {
-    private ArrayList<LogEntry> entries = new ArrayList<LogEntry>();
+    private ArrayList<LogEntry> entries = new ArrayList<>();
     private ArrayAdapter<LogEntry> entryAdapter;
     private String filename = "LogFile.bin";
     private ListView entryList;
@@ -63,7 +63,7 @@ public class ListActivity extends AppCompatActivity {
         super.onStart();
         FiletoEntry();
         displayTotal();
-        entryAdapter = new ArrayAdapter<LogEntry>(this,R.layout.itemlist, entries);
+        entryAdapter = new ArrayAdapter<>(this, R.layout.itemlist, entries);
         entryList.setAdapter(entryAdapter);
     }
 
@@ -112,7 +112,7 @@ public class ListActivity extends AppCompatActivity {
                 EntrytoFile();
             }
         }
-        // If requestCode == 0, then it signifies that the recent obtained LogEntry object is an edit to existing object
+        // If requestCode == 0, then it signifies that the recently obtained LogEntry object is an edit to existing object
         if (requestCode == 0){
             if(resultCode == Activity.RESULT_OK){
                 int position = data.getIntExtra("pos", -1);
@@ -152,7 +152,8 @@ public class ListActivity extends AppCompatActivity {
             total += entries.get(count).getFcost();
         }
         DecimalFormat df = new DecimalFormat("#0.00");
-        entryTotal.setText("Total Cost of Fuel: $" + df.format(total));
+        String textTotal = "Total Cost of Fuel: $" + df.format(total);
+        entryTotal.setText(textTotal);
     }
 
     // This function reads a file and converts it to LogEntry objects placed in ArrayList<LogEntry>

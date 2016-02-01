@@ -1,6 +1,5 @@
 package com.example.eric3.eric3_fueltrack;
 
-import java.io.Serializable;
 import java.text.DecimalFormat;
 
 /**
