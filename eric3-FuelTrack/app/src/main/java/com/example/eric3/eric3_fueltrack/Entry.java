@@ -13,5 +13,6 @@ public interface Entry {
     public String getSFamount();
     public Double getFunit();
     public String getSFunit();
+    public String getSFcost();
     public Double getFcost();
 }

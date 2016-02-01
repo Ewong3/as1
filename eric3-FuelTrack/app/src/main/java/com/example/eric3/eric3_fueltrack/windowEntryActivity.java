@@ -150,8 +150,14 @@ public class windowEntryActivity extends AppCompatActivity {
         int height = (int) (dm.heightPixels * 0.9);
         getWindow().setLayout(width, height);
     }
-    /*  Last accessed: 2016, Jan.17
-    http://stackoverflow.com/questions/10407159/how-to-manage-startactivityforresult-on-android
-    http://stackoverflow.com/questions/32050647/how-to-create-simple-android-studio-pop-up-window-with-edittext-field-for-data-i
+
+    /*
+    Last accessed: 2016, Jan.17
+    User: Nishant
+        http://stackoverflow.com/questions/10407159/how-to-manage-startactivityforresult-on-android
+
+    Last accessed: 2-16, Jan.17
+    User: Tushar Saha
+        http://stackoverflow.com/questions/32050647/how-to-create-simple-android-studio-pop-up-window-with-edittext-field-for-data-i
     */
 }
